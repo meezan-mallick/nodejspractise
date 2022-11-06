@@ -1,7 +1,6 @@
 .table {
     margin: 30px 0px
 }
-
 .title {
     font-size: 30px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -38,8 +37,4 @@ td {
     margin: 20px;
     color: green;
     padding: 10px;
-}
-
-#update,#cancel {
-    display: none;
 }

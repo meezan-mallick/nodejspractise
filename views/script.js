@@ -86,6 +86,7 @@ function show(data) {
             <td class="capitalize" scope="col">${teacher.gender}</td>
             <td class="capitalize" scope="col">${teacher.mobile}</td>
             <td scope="col">
+                
                 <button class="btn btn-danger mb-2" onclick='deleteData("${teacher._id}")'>Delete</button>
             </td>
         </tr>`

@@ -7,7 +7,6 @@ router.post("/adduser", (req, res) => {
   console.log("/adduser : ", req.body);
 
   const user = req.body;
-
   const userOne = new userModel({
     firstName: req.body.firstName,
     lastName: user.lastName,
@@ -25,5 +24,6 @@ router.post("/adduser", (req, res) => {
       return res.status(201).json({ data: "Error : ", e });
     });
 });
+
 
 module.exports = router;

@@ -33,10 +33,13 @@ router.get("/", (req, res) => {
       });
 });
 
+
+
 //Delete Student by Id
 router.get("/delete/:id", async (req, res) => {
   const id = req.params.id;
   const student = await teacherModel.findById(id);
+  console.log(student);
   if (student) {
       teacherModel.deleteOne(student)
           .then(() => {
@@ -45,7 +48,15 @@ router.get("/delete/:id", async (req, res) => {
   } else {
       return res.send({ message: `Data Not Found For ID: ${id}` })
   }
-
 });
+
+router.get('/:id', async(req,res)=>{
+  const id = req.params.id;
+  const student = await teacherModel.findById(id);
+  if(student) {
+    console.log('rocord found');
+    console.log(student);
+  }
+})
 
 module.exports = router;
