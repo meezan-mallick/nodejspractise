@@ -1,4 +1,6 @@
 const express = require("express");
+var mongoose = require("mongoose");
+
 const teacherModel = require("../models/teacherModel");
 let router = express.Router();
 
@@ -65,30 +67,58 @@ router.get("/:id", async (req, res) => {
 });
 
 //UPDATE
-router.post("/update/:id", async (req, res) => {
+// router.post("/update/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const updatedData = req.body; //get updated data from req body
+
+//   const student = await teacherModel.findOneAndUpdate(
+//     { _id: id },
+//     updatedData,
+//     { new: true }
+//   );
+
+//   if (student) {
+//     console.log("rocord found");
+//     console.log(student);
+//     return res.send({ message: `Data Found For ID: ${id}` });
+//   } else {
+//     console.log("data not found");
+//     return res.send({ message: `Data Not Found For ID: ${id}` });
+//   }
+// });
+
+//UPDATE API with validation..
+router.post("/updatev2/:id", async (req, res) => {
+  //Get id from the reqst params
   const id = req.params.id;
-  const teacher = req.body; //get updated data from req body
 
-  updatedData = {
-    name: "tesr",
-    gender: "male",
-    email: "mallick1233@gmail.com",
-    mobile: "92839172039",
-  };
+  //check if the id is valid hexadecimal or not
+  var isValid = mongoose.Types.ObjectId.isValid(id);
 
-  const student = await teacherModel.findOneAndUpdate(
-    { _id: id },
-    updatedData,
-    { new: true }
-  );
+  if (isValid) {
+    //if id is valid then check that id already exist or not
+    const teacher = await teacherModel.findById(id);
 
-  if (student) {
-    console.log("rocord found");
-    console.log(student);
-    return res.send({ message: `Data Found For ID: ${id}` });
+    if (teacher) {
+      const updatedData = req.body; //get updated data from req body
+
+      //and update that data
+      const updateTeacher = await teacherModel.findOneAndUpdate(
+        { _id: id },
+        updatedData,
+        { new: true }
+      );
+
+      if (updateTeacher) {
+        return res.send({ message: `Data Updated For ID: ${id}` });
+      } else {
+        return res.send({ message: `Data Not Updated For ID: ${id}` });
+      }
+    } else {
+      return res.send({ message: `Data Not Found For ID: ${id}` });
+    }
   } else {
-    console.log("data not found");
-    return res.send({ message: `Data Not Found For ID: ${id}` });
+    return res.send({ message: `Invalid ID: ${id}` });
   }
 });
 
